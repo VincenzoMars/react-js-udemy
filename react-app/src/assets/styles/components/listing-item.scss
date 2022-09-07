@@ -1,0 +1,39 @@
+@use '../variables.scss' as variables;
+
+.listing-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba($color: variables.$light-grey, $alpha: 0.7);
+    translate: 0;
+    cursor: pointer;
+
+    transition: 
+        box-shadow 0.1s ease-in-out, 
+        background-color 0.1s linear,
+        translate 0.1s ease-in-out;
+
+    &__title {
+        font-size: 1.7rem;
+        font-weight: 500;
+        align-self: flex-start;
+        color: variables.$dark-grey;
+    }
+
+    &__desc {
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: variables.$dark-grey;
+    }
+
+    &:hover {
+        box-shadow: 0.1rem 0.3rem 0.6rem 0.1rem variables.$grey;
+        background-color: rgba($color: variables.$light-grey, $alpha: 1.0);
+        translate: 0 -2px;
+
+        transition: 
+            box-shadow 0.1s ease-in-out, 
+            background-color 0.1s linear,
+            translate 0.1s ease-in-out;
+    }
+}
