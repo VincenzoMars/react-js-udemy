@@ -24,27 +24,29 @@ const Listing = () => {
   }, [showMoreModalID]);
 
   return (
-    <div className="listing">
-      <h2 className="listing__category-title">{categoryName}</h2>
-      {chosenItemId
-        ? <p>The chosen item id is: {chosenItemId}</p>
-        : <p>No item chosen</p>
-      }
-      {showMoreModalItem
-        ? <p>The modal item title is: {showMoreModalItem.title}</p>
-        : <p>No modal item active</p>
-      }
-      <div className="listing__category-items">
-        {items.map((item) =>
-          <ListingItem
-            key={item.id}
-            item={item}
-            onItemChoose={setChosenItemId}
-            onShowMoreModal={setShowMoreModalID}
-          />
-        )}
+    <>
+      <div className="listing">
+        <h2 className="listing__category-title">{categoryName}</h2>
+        {chosenItemId
+          ? <p>The chosen item id is: {chosenItemId}</p>
+          : <p>No item chosen</p>
+        }
+        {showMoreModalItem
+          ? <p>The modal item title is: {showMoreModalItem.title}</p>
+          : <p>No modal item active</p>
+        }
+        <div className="listing__category-items">
+          {items.map((item) =>
+            <ListingItem
+              key={item.id}
+              item={item}
+              onItemChoose={setChosenItemId}
+              onShowMoreModal={setShowMoreModalID}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
