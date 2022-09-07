@@ -19,6 +19,10 @@ const Listing = () => {
   const [showMoreModalID, setShowMoreModalID] = useState()
   const [showMoreModalItem, setShowMoreModalItem] = useState({})
 
+  const resetShowMoreItem = () => {
+    // reset item to show inside modal to undefined
+    setShowMoreModalItem()
+  }
 
   useEffect(() => {
     setShowMoreModalItem(items.find(item => item.id === showMoreModalID))
@@ -47,7 +51,10 @@ const Listing = () => {
           )}
         </div>
       </div>
-      <ListingModal item={showMoreModalItem}></ListingModal>
+      <ListingModal
+        item={showMoreModalItem}
+        onCloseModal={resetShowMoreItem}
+      />
     </>
   );
 }
