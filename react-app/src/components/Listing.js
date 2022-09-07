@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 
@@ -16,10 +16,15 @@ const Listing = () => {
 
   const [chosenItemId, setChosenItemId] = useState()
   const [showMoreModalID, setShowMoreModalID] = useState()
+  const [showMoreModalItem, setShowMoreModalItem] = useState({})
 
   const showMoreModalHandler = (itemId) => {
     setShowMoreModalID(itemId)
   }
+
+  useEffect(() => {
+    setShowMoreModalItem(items.find(item => item.id === showMoreModalID))
+  }, [showMoreModalID]);
 
   return (
     <div className="listing">
@@ -27,6 +32,10 @@ const Listing = () => {
       {chosenItemId
         ? <p>The chosen item id is: {chosenItemId}</p>
         : <p>No item chosen</p>
+      }
+      {showMoreModalItem
+        ? <p>The modal item title is: {showMoreModalItem.title}</p>
+        : <p>No modal item active</p>
       }
       <div className="listing__category-items">
         {items.map((item) =>
