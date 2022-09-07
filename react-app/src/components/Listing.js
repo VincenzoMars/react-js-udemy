@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
+import ListingModal from './ListingModal'
 
 const items = [
   { id: '0', title: 'Item 0', description: 'This is the Listing Item no.1, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
@@ -46,6 +47,7 @@ const Listing = () => {
           )}
         </div>
       </div>
+      <ListingModal item={showMoreModalItem}></ListingModal>
     </>
   );
 }
