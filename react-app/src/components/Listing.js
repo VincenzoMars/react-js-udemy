@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
+
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
@@ -51,10 +53,10 @@ const Listing = () => {
           )}
         </div>
       </div>
-      <ListingModal
+      {createPortal(<ListingModal
         item={showMoreModalItem}
         onCloseModal={resetShowMoreItem}
-      />
+      />, document.getElementById('modal-root'))}
     </>
   );
 }
