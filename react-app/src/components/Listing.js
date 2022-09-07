@@ -14,7 +14,12 @@ const categoryName = 'Category Name'
 
 const Listing = () => {
 
-  const [chosenItemId, setChosenItemId] = useState('')
+  const [chosenItemId, setChosenItemId] = useState()
+  const [showMoreModalID, setShowMoreModalID] = useState()
+
+  const showMoreModalHandler = (itemId) => {
+    setShowMoreModalID(itemId)
+  }
 
   return (
     <div className="listing">
@@ -29,6 +34,7 @@ const Listing = () => {
             key={item.id}
             item={item}
             onItemChoose={setChosenItemId}
+            onShowMoreModal={showMoreModalHandler}
           />
         )}
       </div>
