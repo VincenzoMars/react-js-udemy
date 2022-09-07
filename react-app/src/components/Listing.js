@@ -18,9 +18,6 @@ const Listing = () => {
   const [showMoreModalID, setShowMoreModalID] = useState()
   const [showMoreModalItem, setShowMoreModalItem] = useState({})
 
-  const showMoreModalHandler = (itemId) => {
-    setShowMoreModalID(itemId)
-  }
 
   useEffect(() => {
     setShowMoreModalItem(items.find(item => item.id === showMoreModalID))
@@ -43,7 +40,7 @@ const Listing = () => {
             key={item.id}
             item={item}
             onItemChoose={setChosenItemId}
-            onShowMoreModal={showMoreModalHandler}
+            onShowMoreModal={setShowMoreModalID}
           />
         )}
       </div>
