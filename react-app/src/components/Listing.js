@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import '../assets/styles/components/listing.scss';
@@ -21,6 +21,11 @@ const Listing = () => {
   const [showMoreModalID, setShowMoreModalID] = useState()
   const [showMoreModalItem, setShowMoreModalItem] = useState({})
 
+  const inputRef = useRef()
+  const [valueOutput, setValueOutput] = useState()
+  const inputValueChange = () => {
+    setValueOutput(inputRef.current.value)
+  }
   const resetShowMoreItem = () => {
     // reset item to show inside modal to undefined
     setShowMoreModalItem()
@@ -52,6 +57,11 @@ const Listing = () => {
             />
           )}
         </div>
+
+        <label>Inserisci qualcosa per veder la ref funzionare:</label>
+        <input type="text" ref={inputRef} onChange={inputValueChange} />
+        <span>Output valore preso dalla ref: <b>{valueOutput}</b></span>
+
       </div>
       {createPortal(<ListingModal
         item={showMoreModalItem}
