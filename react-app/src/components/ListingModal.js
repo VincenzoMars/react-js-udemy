@@ -11,19 +11,19 @@ const ListingModal = (props) => {
     }
   }
 
-  return (
-    <>
-      {isOpen
-        ? <div className="modal-overlay" onClick={closeModalHandler}>
-          <div className='listing-modal'>
-            <h2 className="listing-modal__title">{item.title}</h2>
-            <p className="listing-modal__desc">{item.description}</p>
-            <img src={item.imageUrl} alt="the item modal itself" />
-          </div>
+  if (isOpen) {
+    return (
+      <div className="modal-overlay" onClick={closeModalHandler}>
+        <div className='listing-modal'>
+          <h2 className="listing-modal__title">{item.title}</h2>
+          <p className="listing-modal__desc">{item.description}</p>
+          <img src={item.imageUrl} alt="the item modal itself" />
         </div>
-        : <></>}
-    </>
-  );
+      </div>
+    )
+  }
+
+  return
 }
 
 export default ListingModal;
