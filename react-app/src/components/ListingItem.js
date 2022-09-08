@@ -5,20 +5,22 @@ const ListingItem = (props) => {
   const { item, onItemChoose, onShowMoreModal } = props
 
   const changeHandler = () => {
-    onItemChoose(item.id)
+    onItemChoose(item.imdbID)
   }
 
   const showMoreModalEmitter = () => {
-    onShowMoreModal(item.id)
+    onShowMoreModal(item.imdbID)
   }
 
 
   return (
-    <div className="listing-item" onClick={showMoreModalEmitter}>
-      <h2 className="listing-item__title">{item.title}</h2>
-      <p className="listing-item__desc">{item.description}</p>
-      <img src={item.imageUrl} alt="the item itself" />
-      <button onClick={changeHandler}>Choose</button>
+    <div className="listing-item" onClick={showMoreModalEmitter} >
+      <span className="listing-item__type">{item.Type}</span>
+      <img className="listing-item__poster" src={item.Poster} alt="the item itself" />
+      <div className='listing-item__info'>
+        <h2 className="listing-item__info__title">{item.Title}</h2>
+        {/* <button onClick={changeHandler}>Choose</button> */}
+      </div>
     </div>
   );
 }

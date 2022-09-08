@@ -4,36 +4,71 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba($color: variables.$light-grey, $alpha: 0.7);
+    background-color: rgba($color: variables.$light, $alpha: 0.7);
     translate: 0;
     cursor: pointer;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: variables.$light, $alpha: 0.2);
+    }
 
     transition: 
         box-shadow 0.1s ease-in-out, 
         background-color 0.1s linear,
         translate 0.1s ease-in-out;
 
-    &__title {
-        font-size: 1.7rem;
-        font-weight: 500;
-        align-self: flex-start;
-        color: variables.$dark-grey;
+    &__type {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: variables.$orange-2;
+        padding: .3rem .5rem;
+        color: variables.$light;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin: .5rem;
+        font-size: 1.2rem;
+        line-height: 1;
     }
 
-    &__desc {
-        font-size: 1.2rem;
-        font-weight: 400;
-        color: variables.$dark-grey;
+    &__poster {
+        width: 100%;
+        height: 100%;
     }
 
     &:hover {
-        box-shadow: 0.1rem 0.3rem 0.6rem 0.1rem variables.$grey;
         background-color: rgba($color: variables.$light-grey, $alpha: 1.0);
-        translate: 0 -2px;
+        translate: 0 2px;
 
         transition: 
             box-shadow 0.1s ease-in-out, 
             background-color 0.1s linear,
             translate 0.1s ease-in-out;
+
+        .listing-item__info {
+            opacity: 1;
+            transition: opacity .1s ease-in-out;
+        }
+    }
+
+    &__info {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 2rem 0 1rem;
+        background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
+        opacity: 0;
+        transition: opacity .1s ease-in-out;
+
+        &__title {
+            font-size: 1.7rem;
+            font-weight: 500;
+            align-self: flex-start;
+            color: variables.$light;
+        }
     }
 }
