@@ -1,7 +1,7 @@
 @use '../variables.scss' as variables;
 
 #modal-root {
-    position: absolute;
+    position: fixed;
     top: 0;
     
     .modal-overlay {
