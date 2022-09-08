@@ -37,11 +37,6 @@ const Listing = () => {
   const setModalMovie = (imdbID) => modalMovieDispatch({ type: 'SET_MOVIE_BY_ID', imdbID })
   const resetModalMovie = () => modalMovieDispatch({ type: 'RESET_MOVIE' })
 
-  const inputRef = useRef()
-  const [valueOutput, setValueOutput] = useState()
-  const inputValueChange = () => {
-    setValueOutput(inputRef.current.value)
-  }
 
   return (
     <>
@@ -56,9 +51,6 @@ const Listing = () => {
             />
           )}
         </div>
-        <label>Inserisci qualcosa per veder la ref funzionare:</label>
-        <input type="text" ref={inputRef} onChange={inputValueChange} />
-        <span>Output valore preso dalla ref: <b>{valueOutput}</b></span>
       </div>
       {createPortal(<ListingModal
         movie={modalMovieState.movie}
