@@ -1,21 +1,24 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useReducer } from 'react'
 import { createPortal } from 'react-dom'
-
+import { getInitialMovies } from '../services/movies'
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
 
-const items = [
-  { id: '0', title: 'Item 0', description: 'This is the Listing Item no.0, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '1', title: 'Item 1', description: 'This is the Listing Item no.1, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '2', title: 'Item 2', description: 'This is the Listing Item no.2, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '3', title: 'Item 3', description: 'This is the Listing Item no.3, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '4', title: 'Item 4', description: 'This is the Listing Item no.4, woah!', imageUrl: 'https://via.placeholder.com/274x352' }
-]
-
 const categoryName = 'Category Name'
 
 const Listing = () => {
+  const [movies, setMovies] = useState([]);
+
+  const getMovies = async () => {
+    const movies = await getInitialMovies();
+    setMovies(movies);
+  }
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
 
   const [chosenItemId, setChosenItemId] = useState()
   const [showMoreModalID, setShowMoreModalID] = useState()
@@ -31,9 +34,10 @@ const Listing = () => {
     setShowMoreModalItem()
   }
 
-  useEffect(() => {
-    setShowMoreModalItem(items.find(item => item.id === showMoreModalID))
-  }, [showMoreModalID]);
+  const setShowMoreItem = (imdbID) => {
+    setShowMoreModalID(imdbID)
+    setShowMoreModalItem(movies.find(item => item.imdbID === imdbID))
+  }
 
   return (
     <>
@@ -44,16 +48,16 @@ const Listing = () => {
           : <p>No item chosen</p>
         }
         {showMoreModalItem
-          ? <p>The modal item title is: {showMoreModalItem.title}</p>
+          ? <p>The modal item title is: {showMoreModalItem.Title}</p>
           : <p>No modal item active</p>
         }
         <div className="listing__category-items">
-          {items.map((item) =>
+          {movies.map((movie) =>
             <ListingItem
-              key={item.id}
-              item={item}
+              key={movie.imdbID}
+              item={movie}
               onItemChoose={setChosenItemId}
-              onShowMoreModal={setShowMoreModalID}
+              onShowMoreModal={setShowMoreItem}
             />
           )}
         </div>
