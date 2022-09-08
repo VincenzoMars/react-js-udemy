@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import classes from '../assets/styles/components/login.scss';
+import '../assets/styles/components/login.scss';
 
 const Login = (props) => {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -52,12 +52,9 @@ const Login = (props) => {
   };
 
   return (
-    <div className={classes.login}>
+    <div>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${emailIsValid === false ? classes.invalid : ''
-            }`}
-        >
+        <div>
           <label htmlFor="email">E-Mail</label>
           <input
             type="email"
@@ -67,10 +64,7 @@ const Login = (props) => {
             onBlur={validateEmailHandler}
           />
         </div>
-        <div
-          className={`${classes.control} ${passwordIsValid === false ? classes.invalid : ''
-            }`}
-        >
+        <div>
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -80,8 +74,8 @@ const Login = (props) => {
             onBlur={validatePasswordHandler}
           />
         </div>
-        <div className={classes.actions}>
-          <button type="submit" className={classes.btn} disabled={!formIsValid}>
+        <div>
+          <button type="submit" disabled={!formIsValid}>
             Login
           </button>
         </div>
