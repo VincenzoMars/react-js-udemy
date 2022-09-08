@@ -1,71 +1,61 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useReducer } from 'react'
 import { createPortal } from 'react-dom'
-
+import { getInitialMovies } from '../services/movies'
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
 
-const items = [
-  { id: '0', title: 'Item 0', description: 'This is the Listing Item no.0, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '1', title: 'Item 1', description: 'This is the Listing Item no.1, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '2', title: 'Item 2', description: 'This is the Listing Item no.2, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '3', title: 'Item 3', description: 'This is the Listing Item no.3, woah!', imageUrl: 'https://via.placeholder.com/274x352' },
-  { id: '4', title: 'Item 4', description: 'This is the Listing Item no.4, woah!', imageUrl: 'https://via.placeholder.com/274x352' }
-]
-
-const categoryName = 'Category Name'
+const categoryName = 'Movies'
 
 const Listing = () => {
 
-  const [chosenItemId, setChosenItemId] = useState()
-  const [showMoreModalID, setShowMoreModalID] = useState()
-  const [showMoreModalItem, setShowMoreModalItem] = useState({})
+  const [movies, setMovies] = useState([]);
 
-  const inputRef = useRef()
-  const [valueOutput, setValueOutput] = useState()
-  const inputValueChange = () => {
-    setValueOutput(inputRef.current.value)
-  }
-  const resetShowMoreItem = () => {
-    // reset item to show inside modal to undefined
-    setShowMoreModalItem()
+  const getMovies = async () => {
+    const movies = await getInitialMovies();
+    setMovies(movies);
   }
 
   useEffect(() => {
-    setShowMoreModalItem(items.find(item => item.id === showMoreModalID))
-  }, [showMoreModalID]);
+    getMovies();
+  }, []);
+
+
+  const modalMovieReducer = (state, action) => {
+    switch (action.type) {
+      case 'SET_MOVIE_BY_ID':
+        const movie = movies.find(movie => movie.imdbID === action.imdbID)
+        return { movie, isOpen: true }
+      case 'RESET_MOVIE':
+        return modalMovieInitialState
+      default:
+        throw new Error()
+    }
+  }
+  const modalMovieInitialState = { movie: {}, isOpen: false }
+  const [modalMovieState, modalMovieDispatch] = useReducer(modalMovieReducer, modalMovieInitialState);
+  const setModalMovie = (imdbID) => modalMovieDispatch({ type: 'SET_MOVIE_BY_ID', imdbID })
+  const resetModalMovie = () => modalMovieDispatch({ type: 'RESET_MOVIE' })
+
 
   return (
     <>
       <div className="listing">
         <h2 className="listing__category-title">{categoryName}</h2>
-        {chosenItemId
-          ? <p>The chosen item id is: {chosenItemId}</p>
-          : <p>No item chosen</p>
-        }
-        {showMoreModalItem
-          ? <p>The modal item title is: {showMoreModalItem.title}</p>
-          : <p>No modal item active</p>
-        }
         <div className="listing__category-items">
-          {items.map((item) =>
+          {movies.map((movie) =>
             <ListingItem
-              key={item.id}
-              item={item}
-              onItemChoose={setChosenItemId}
-              onShowMoreModal={setShowMoreModalID}
+              key={movie.imdbID}
+              item={movie}
+              onShowMoreModal={setModalMovie}
             />
           )}
         </div>
-
-        <label>Inserisci qualcosa per veder la ref funzionare:</label>
-        <input type="text" ref={inputRef} onChange={inputValueChange} />
-        <span>Output valore preso dalla ref: <b>{valueOutput}</b></span>
-
       </div>
       {createPortal(<ListingModal
-        item={showMoreModalItem}
-        onCloseModal={resetShowMoreItem}
+        movie={modalMovieState.movie}
+        isOpen={modalMovieState.isOpen}
+        onCloseModal={resetModalMovie}
       />, document.getElementById('modal-root'))}
     </>
   );
