@@ -8,20 +8,6 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  // useEffect(() => {
-  //   const identifier = setTimeout(() => {
-  //     console.log('Checking form validity!');
-  //     setFormIsValid(
-  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //     );
-  //   }, 500);
-
-  //   return () => {
-  //     console.log('CLEANUP');
-  //     clearTimeout(identifier);
-  //   };
-  // }, [enteredEmail, enteredPassword]);
-
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
 
@@ -52,31 +38,35 @@ const Login = (props) => {
   };
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="email">E-Mail</label>
+    <div className='login-wrapper'>
+      <form className='login-wrapper__form' onSubmit={submitHandler}>
+        <h2 className='form-title'>Login</h2>
+
+        <div className='form-field'>
           <input
             type="email"
             id="email"
+            placeholder='email'
             value={enteredEmail}
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
           />
+          <label htmlFor="email">E-Mail</label>
         </div>
-        <div>
-          <label htmlFor="password">Password</label>
+        <div className='form-field'>
           <input
             type="password"
             id="password"
+            placeholder='password'
             value={enteredPassword}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />
+          <label htmlFor="password">Password</label>
         </div>
         <div>
-          <button type="submit" disabled={!formIsValid}>
-            Login
+          <button className='submit-button' type="submit" disabled={!formIsValid}>
+            Enjoy
           </button>
         </div>
       </form>
