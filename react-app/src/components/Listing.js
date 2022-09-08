@@ -5,7 +5,7 @@ import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
 
-const categoryName = 'Category Name'
+const categoryName = 'Movies'
 
 const Listing = () => {
 
