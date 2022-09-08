@@ -2,24 +2,33 @@
 
 .listing-item {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
-    background-color: rgba($color: variables.$light, $alpha: 0.7);
-    translate: 0;
+    overflow: hidden;
     cursor: pointer;
 
-    &::before {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($color: variables.$light, $alpha: 0.2);
-    }
+    &:hover {
 
-    transition: 
-        box-shadow 0.1s ease-in-out, 
-        background-color 0.1s linear,
-        translate 0.1s ease-in-out;
+        transition: 
+            box-shadow 0.3s ease-in-out, 
+            translate 0.3s ease-in-out;
+
+        .listing-item__info {
+            opacity: 1;
+            transition: opacity .3s ease-in-out;
+
+            &__title {
+                color: variables.$light;
+                transition: color .3s ease-in-out;
+            }
+        }
+
+        .listing-item__poster {
+            scale: 1.05;
+            transition: scale .3s ease-in-out;
+        }
+    }
 
     &__type {
         position: absolute;
@@ -38,21 +47,7 @@
     &__poster {
         width: 100%;
         height: 100%;
-    }
-
-    &:hover {
-        background-color: rgba($color: variables.$light-grey, $alpha: 1.0);
-        translate: 0 2px;
-
-        transition: 
-            box-shadow 0.1s ease-in-out, 
-            background-color 0.1s linear,
-            translate 0.1s ease-in-out;
-
-        .listing-item__info {
-            opacity: 1;
-            transition: opacity .1s ease-in-out;
-        }
+        transition: scale .3s ease-in-out;
     }
 
     &__info {
@@ -62,13 +57,14 @@
         padding: 2rem 0 1rem;
         background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
         opacity: 0;
-        transition: opacity .1s ease-in-out;
+        transition: opacity .3s ease-in-out;
 
         &__title {
             font-size: 1.7rem;
             font-weight: 500;
             align-self: flex-start;
-            color: variables.$light;
+            color: transparent;
+            transition: color .3s ease-in-out;
         }
     }
 }
