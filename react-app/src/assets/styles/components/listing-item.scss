@@ -1,0 +1,70 @@
+@use '../variables.scss' as variables;
+
+.listing-item {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:hover {
+
+        transition: 
+            box-shadow 0.3s ease-in-out, 
+            translate 0.3s ease-in-out;
+
+        .listing-item__info {
+            opacity: 1;
+            transition: opacity .3s ease-in-out;
+
+            &__title {
+                color: variables.$light;
+                transition: color .3s ease-in-out;
+            }
+        }
+
+        .listing-item__poster {
+            scale: 1.05;
+            transition: scale .3s ease-in-out;
+        }
+    }
+
+    &__type {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: variables.$orange-2;
+        padding: .3rem .5rem;
+        color: variables.$light;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin: .5rem;
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+
+    &__poster {
+        width: 100%;
+        height: 100%;
+        transition: scale .3s ease-in-out;
+    }
+
+    &__info {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 2rem 0 1rem;
+        background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(255,255,255,0) 100%);
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+
+        &__title {
+            font-size: 1.7rem;
+            font-weight: 500;
+            align-self: flex-start;
+            color: transparent;
+            transition: color .3s ease-in-out;
+        }
+    }
+}

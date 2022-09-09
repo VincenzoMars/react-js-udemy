@@ -1,0 +1,10 @@
+@use './variables.scss' as variables;
+
+
+.App {
+  min-height: 100vh;
+  text-align: center;
+  background-color: variables.$dark;
+  display: flex;
+  justify-content: center;
+}
