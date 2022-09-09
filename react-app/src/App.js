@@ -2,7 +2,7 @@ import './assets/styles/app.scss';
 import { useState, useEffect } from 'react'
 import Listing from './components/Listing';
 import Login from './components/Login';
-
+import { ListingContextProvider } from './contexts/Listing';
 const App = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,10 +28,12 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      {!isLoggedIn && <Login onLogin={loginHandler} />}
-      {isLoggedIn && <Listing onLogout={logoutHandler} />}
-    </div>
+    <ListingContextProvider>
+      <div className="App">
+        {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {isLoggedIn && <Listing onLogout={logoutHandler} />}
+      </div>
+    </ListingContextProvider>
   );
 }
 
