@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { getInitialMovies } from '../services/movies'
 import '../assets/styles/components/listing.scss';
@@ -22,12 +22,14 @@ const Listing = () => {
   const setMovieInModal = (imdbID) => dispatch({ type: 'SET_MOVIE_BY_ID', imdbID })
   const resetMovieInModal = () => dispatch({ type: 'RESET_MOVIE' })
 
+  const moviesMemo = useMemo(() => listingState.movies, [listingState.movies])
+
   return (
     <>
       <div className="listing">
         <h2 className="listing__category-title">Movies</h2>
         <div className="listing__category-items">
-          {listingState.movies.map((movie) =>
+          {moviesMemo.map((movie) =>
             <ListingItem
               key={movie.imdbID}
               item={movie}
