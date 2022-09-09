@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { getInitialMovies } from '../services/movies'
 import '../assets/styles/components/listing.scss';
@@ -10,10 +10,10 @@ import { useListingContext } from '../contexts/Listing';
 const Listing = () => {
   const { listingState, dispatch } = useListingContext()
 
-  const getMovies = async () => {
+  const getMovies = useCallback(async () => {
     const movies = await getInitialMovies()
     dispatch({ type: 'SET_FETCHED_MOVIES', movies })
-  }
+  }, [dispatch])
 
   useEffect(() => {
     getMovies();
