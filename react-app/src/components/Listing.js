@@ -1,23 +1,16 @@
-import { useEffect, useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import { createPortal } from 'react-dom'
-import { getInitialMovies } from '../services/movies'
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
+import useMovies from '../hooks/use-movies'
 
 import { useListingContext } from '../contexts/Listing';
 
 const Listing = () => {
   const { listingState, dispatch } = useListingContext()
 
-  const getMovies = useCallback(async () => {
-    const movies = await getInitialMovies()
-    dispatch({ type: 'SET_FETCHED_MOVIES', movies })
-  }, [dispatch])
-
-  useEffect(() => {
-    getMovies();
-  }, [getMovies]);
+  useMovies(dispatch)
 
   const setMovieInModal = (imdbID) => dispatch({ type: 'SET_MOVIE_BY_ID', imdbID })
   const resetMovieInModal = () => dispatch({ type: 'RESET_MOVIE' })
