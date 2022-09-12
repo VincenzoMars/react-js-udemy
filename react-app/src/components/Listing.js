@@ -5,10 +5,12 @@ import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
 import useMovies from '../hooks/use-movies'
 
-import { useListingContext } from '../contexts/Listing';
+import { useSelector, useDispatch } from 'react-redux'
 
 const Listing = () => {
-  const { listingState, dispatch } = useListingContext()
+
+  const dispatch = useDispatch()
+  const listingState = useSelector(state => state.listing)
 
   useMovies(dispatch)
 
