@@ -1,3 +1,5 @@
+import { createSlice } from '@reduxjs/toolkit'
+
 const listingInitialState = {
     movies: [],
     modal: {
@@ -36,3 +38,23 @@ const listingReducer = (state = listingInitialState, action) => {
 }
 
 export default listingReducer
+
+/* using slices */
+export const listingSlice = createSlice({
+    name: 'listing',
+    initialState: listingInitialState,
+    reducers: {
+        setFetchedMovies(state, action) {
+            state.movies = action.payload.movies
+        },
+        setMovieById(state, action) {
+            const movie = state.movies.find(movie => movie.imdbID === action.payload.imdbID)
+            state.modal = { movie, isOpen: true }
+        },
+        resetMovie(state) {
+            state.modal = { movie: {}, isOpen: false }
+        }
+    }
+});
+
+export const listingActions = listingSlice.actions
