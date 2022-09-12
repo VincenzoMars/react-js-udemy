@@ -1,64 +1,54 @@
-import { useState, useEffect, useRef, useReducer } from 'react'
+import { useMemo } from 'react'
 import { createPortal } from 'react-dom'
-import { getInitialMovies } from '../services/movies'
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
+import useMovies from '../hooks/use-movies'
 
-const categoryName = 'Movies'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { listingActions } from '../store/listing'
 
 const Listing = () => {
 
-  const [movies, setMovies] = useState([]);
+  const dispatch = useDispatch()
+  const listingState = useSelector(state => state.listing)
 
-  const getMovies = async () => {
-    const movies = await getInitialMovies();
-    setMovies(movies);
-  }
+  useMovies(dispatch)
 
-  useEffect(() => {
-    getMovies();
-  }, []);
+  // const setMovieInModal = (imdbID) => dispatch({ type: 'SET_MOVIE_BY_ID', imdbID }) ----- using the normal reducer
+  // const resetMovieInModal = () => dispatch({ type: 'RESET_MOVIE' }) ----- using the normal reducer
 
+  const setMovieInModal = (imdbID) => dispatch(listingActions.setMovieById({ imdbID }))
+  const resetMovieInModal = () => dispatch(listingActions.resetMovie())
 
-  const modalMovieReducer = (state, action) => {
-    switch (action.type) {
-      case 'SET_MOVIE_BY_ID':
-        const movie = movies.find(movie => movie.imdbID === action.imdbID)
-        return { movie, isOpen: true }
-      case 'RESET_MOVIE':
-        return modalMovieInitialState
-      default:
-        throw new Error()
-    }
-  }
-  const modalMovieInitialState = { movie: {}, isOpen: false }
-  const [modalMovieState, modalMovieDispatch] = useReducer(modalMovieReducer, modalMovieInitialState);
-  const setModalMovie = (imdbID) => modalMovieDispatch({ type: 'SET_MOVIE_BY_ID', imdbID })
-  const resetModalMovie = () => modalMovieDispatch({ type: 'RESET_MOVIE' })
-
+  /* in realtà per non far ri-valutare il componente figlio ad ogni cambio di stato del padre
+    dovremmo usare delle useCallback() anche per le due funzioni subito sopra perchè sono props dell'item 
+    perchè senza useCallback vengono re-inizializzate e quindi la prop le percepisce come 'nuove' 
+    */
+  const moviesMemo = useMemo(() => listingState.movies, [listingState.movies])
 
   return (
     <>
       <div className="listing">
-        <h2 className="listing__category-title">{categoryName}</h2>
+        <h2 className="listing__category-title">Movies</h2>
         <div className="listing__category-items">
-          {movies.map((movie) =>
+          {moviesMemo.map((movie) =>
             <ListingItem
               key={movie.imdbID}
               item={movie}
-              onShowMoreModal={setModalMovie}
+              onShowMoreModal={setMovieInModal}
             />
           )}
         </div>
       </div>
       {createPortal(<ListingModal
-        movie={modalMovieState.movie}
-        isOpen={modalMovieState.isOpen}
-        onCloseModal={resetModalMovie}
+        movie={listingState.modal.movie}
+        isOpen={listingState.modal.isOpen}
+        onCloseModal={resetMovieInModal}
       />, document.getElementById('modal-root'))}
     </>
-  );
+  )
 }
 
 export default Listing;
