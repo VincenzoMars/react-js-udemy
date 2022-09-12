@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { combineReducers } from 'redux'
-import listingReducer from './listing'
+import { combineReducers } from '@reduxjs/toolkit'
+import { listingSlice } from './listing'
 
-const rootReducers = combineReducers({
-    listing: listingReducer
-})
+const reducer = combineReducers({ listing: listingSlice.reducer })
 
-const store = configureStore({ reducer: rootReducers })
+const store = configureStore({ reducer })
 
 const listingSubscriber = () => {
     const latestState = store.getState()
