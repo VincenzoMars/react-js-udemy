@@ -1,20 +1,25 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import '../assets/styles/components/listing.scss';
 import ListingItem from './ListingItem'
 import ListingModal from './ListingModal'
-import useMovies from '../hooks/use-movies'
-
 import { useSelector, useDispatch } from 'react-redux'
-
-import { listingActions } from '../store/listing'
+import { listingActions } from '../store/listing-slice'
+import { fetchMovies, fetchMoviesByName } from '../store/listing-actions'
 
 const Listing = () => {
 
   const dispatch = useDispatch()
   const listingState = useSelector(state => state.listing)
 
-  useMovies(dispatch)
+  useEffect(() => {
+    dispatch(fetchMovies())
+  }, [dispatch]);
+
+  const searchMoviesByName = (event) => {
+    const movieName = event.target.value
+    dispatch(fetchMoviesByName(movieName))
+  }
 
   // const setMovieInModal = (imdbID) => dispatch({ type: 'SET_MOVIE_BY_ID', imdbID }) ----- using the normal reducer
   // const resetMovieInModal = () => dispatch({ type: 'RESET_MOVIE' }) ----- using the normal reducer
@@ -31,6 +36,8 @@ const Listing = () => {
   return (
     <>
       <div className="listing">
+        <h3>search</h3>
+        <input type="text" onChange={searchMoviesByName} />
         <h2 className="listing__category-title">Movies</h2>
         <div className="listing__category-items">
           {moviesMemo.map((movie) =>

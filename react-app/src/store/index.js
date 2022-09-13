@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from '@reduxjs/toolkit'
-import { listingSlice } from './listing'
+import { listingSlice } from './listing-slice'
 
 const reducer = combineReducers({
     listing: listingSlice.reducer
