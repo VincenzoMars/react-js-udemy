@@ -1,6 +1,8 @@
+// DEPRECATED
+
 import { useEffect, useCallback, useState } from 'react'
 import { fetchMovies } from '../services/movies'
-import { listingActions } from '../store/listing'
+import { listingActions } from '../store/listing-slice'
 
 const useMovies = (dispatch) => {
 
