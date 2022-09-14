@@ -1,28 +1,28 @@
 import '../assets/styles/components/listing-modal.scss';
+import ListingModalProps from '../types/props/ListingModalProps';
 
-const ListingModal = (props) => {
+const ListingModal = (props : ListingModalProps) => {
 
   const { movie, onCloseModal, isOpen } = props
 
-  const closeModalHandler = event => {
+  const closeModalHandler = (event: any) => {
     if (event.target === event.currentTarget) {
       onCloseModal()
     }
   }
 
-  if (isOpen) {
+  if (movie && isOpen) {
     return (
       <div className="modal-overlay" onClick={closeModalHandler}>
         <div className='listing-modal'>
           <h2 className="listing-modal__title">{movie.Title}</h2>
-          <p className="listing-modal__desc">{movie.Description}</p>
           <img src={movie.Poster} alt="the item modal itself" />
         </div>
       </div>
     )
   }
 
-  return
+  return <></>
 }
 
 export default ListingModal;

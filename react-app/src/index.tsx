@@ -6,7 +6,8 @@ import store from './store'
 import './assets/styles/index.scss';
 import reportWebVitals from './utils/reportWebVitals';
 
-const root = createRoot(document.getElementById('root'));
+const $root = document.getElementById('root') as Element
+const root = createRoot($root);
 
 root.render(
   <React.StrictMode>
