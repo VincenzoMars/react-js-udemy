@@ -1,36 +1,34 @@
 import { useMemo, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import '../assets/styles/components/listing.scss';
-import ListingItem from './ListingItem'
+import ListingMovie from './ListingMovie'
 import ListingModal from './ListingModal'
 import { useSelector, useDispatch } from 'react-redux'
 import { listingActions } from '../store/listing-slice'
 import { fetchMovies, fetchMoviesByName } from '../store/listing-actions'
+import State from '../types/store/State'
+
+// typed dispatch handmade
+import AppDispatch from "../types/store/AppDispatch";
 
 const Listing = () => {
 
-  const dispatch = useDispatch()
-  const listingState = useSelector(state => state.listing)
+  const dispatch: AppDispatch = useDispatch()
+  const listingState = useSelector((state: State) => state.listing)
 
   useEffect(() => {
     dispatch(fetchMovies())
   }, [dispatch]);
 
-  const searchMoviesByName = (event) => {
-    const movieName = event.target.value
+  const searchMoviesByName = (event: React.FormEvent<HTMLInputElement>) => {
+    debugger
+    const movieName = event.currentTarget.value
     dispatch(fetchMoviesByName(movieName))
   }
 
-  // const setMovieInModal = (imdbID) => dispatch({ type: 'SET_MOVIE_BY_ID', imdbID }) ----- using the normal reducer
-  // const resetMovieInModal = () => dispatch({ type: 'RESET_MOVIE' }) ----- using the normal reducer
-
-  const setMovieInModal = (imdbID) => dispatch(listingActions.setMovieById({ imdbID }))
+  const setMovieInModal = (imdbID: string) => dispatch(listingActions.setMovieById({ imdbID }))
   const resetMovieInModal = () => dispatch(listingActions.resetMovie())
 
-  /* in realtà per non far ri-valutare il componente figlio ad ogni cambio di stato del padre
-    dovremmo usare delle useCallback() anche per le due funzioni subito sopra perchè sono props dell'item 
-    perchè senza useCallback vengono re-inizializzate e quindi la prop le percepisce come 'nuove' 
-    */
   const moviesMemo = useMemo(() => listingState.movies, [listingState.movies])
 
   return (
@@ -41,9 +39,9 @@ const Listing = () => {
         <h2 className="listing__category-title">Movies</h2>
         <div className="listing__category-items">
           {moviesMemo.map((movie) =>
-            <ListingItem
-              key={movie.imdbID}
-              item={movie}
+            <ListingMovie
+              key={movie && movie.imdbID}
+              movie={movie}
               onShowMoreModal={setMovieInModal}
             />
           )}
@@ -53,7 +51,7 @@ const Listing = () => {
         movie={listingState.modal.movie}
         isOpen={listingState.modal.isOpen}
         onCloseModal={resetMovieInModal}
-      />, document.getElementById('modal-root'))}
+      />, document.getElementById('modal-root') as Element)}
     </>
   )
 }
