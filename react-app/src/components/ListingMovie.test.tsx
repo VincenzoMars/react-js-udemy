@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import ListingMovie from './ListingMovie';
+import '@testing-library/jest-dom'
 
 import ListingMoviePropsType from '../types/props/ListingMovieProps'
 
@@ -11,11 +12,11 @@ const withoutMovieProps: ListingMoviePropsType = {
 
 const withMovieProps: ListingMoviePropsType = {
   movie: {
-    Title: 'Title',
+    Title: 'Title Content',
     Year: '2022',
     imdbID: '1',
-    Type: 'Type',
-    Poster: 'PosterURL'
+    Type: 'Type Content',
+    Poster: 'PosterURL Content'
   },
   onShowMoreModal: (imdbID: string) => ({})
 }
@@ -40,6 +41,10 @@ test('listing item WITH correct movie prop', () => {
   // nothing...
 
   // Assert
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/Title Content/i);
+  expect(titleElement).toBeInTheDocument();
+  const typeElement = screen.getByText(/Type Content/i);
+  expect(typeElement).toBeInTheDocument();
+  const posterElement = screen.queryByAltText(/the item itself/i)
+  expect(posterElement).toBeInTheDocument();
 });
