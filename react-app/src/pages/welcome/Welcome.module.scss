@@ -1,0 +1,56 @@
+@use '../../assets/styles/variables.scss';
+
+.pageWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: variables.$primary;
+
+    .title {
+        font-family: Shotgun;
+        font-size: 10rem;
+        color: variables.$quaternary;
+        font-weight: 300;
+        padding-bottom: 1rem;
+        margin: 0;
+        line-height: 1;
+    }
+
+    .subTitle {
+        font-family: Typography;
+        font-size: 3rem;
+        color: variables.$pentakill;
+        font-weight: 300;
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+
+        &Secondary {
+            font-family: Poppins;
+            text-decoration: none;
+            background-color: variables.$pentakill;
+            color: variables.$primary;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 1.5rem;
+            border: 2px solid variables.$pentakill;
+
+            transition: 
+                    background-color 0.2s ease-in-out,
+                    border 0.2s ease-in-out;
+        
+            &:hover {
+                background-color: variables.$quaternary;
+                border: 2px solid variables.$secondary;
+                transition: 
+                    background-color 0.2s ease-in-out,
+                    border 0.2s ease-in-out;
+            }
+        }
+    }
+}
+
