@@ -21,30 +21,32 @@ const withMovieProps: ListingMoviePropsType = {
   onShowMoreModal: (imdbID: string) => ({})
 }
 
-test('listing item WITHOUT correct movie prop', () => {
-  // Arrange
-  render(<ListingMovie {...withoutMovieProps} />);
+describe('ListingMovie', () => {
+  test('listing item WITHOUT correct movie prop', () => {
+    // Arrange
+    render(<ListingMovie {...withoutMovieProps} />);
+    
+    // Act
+    // nothing...
   
-  // Act
-  // nothing...
+    // Assert
+    const headingElement = screen.getByText(/Movie Not Found!/i);
+    expect(headingElement).toBeInTheDocument();
+  });
+  
+  test('listing item WITH correct movie prop', () => {
+    // Arrange
+    render(<ListingMovie {...withMovieProps} />);
 
-  // Assert
-  const headingElement = screen.getByText(/Movie Not Found!/i);
-  expect(headingElement).toBeInTheDocument();
-});
+    // Act
+    // nothing...
 
-test('listing item WITH correct movie prop', () => {
-  // Arrange
-  render(<ListingMovie {...withMovieProps} />);
-
-  // Act
-  // nothing...
-
-  // Assert
-  const titleElement = screen.getByText(/Title Content/i);
-  expect(titleElement).toBeInTheDocument();
-  const typeElement = screen.getByText(/Type Content/i);
-  expect(typeElement).toBeInTheDocument();
-  const posterElement = screen.queryByAltText(/the item itself/i)
-  expect(posterElement).toBeInTheDocument();
-});
+    // Assert
+    const titleElement = screen.getByText(/Title Content/i);
+    expect(titleElement).toBeInTheDocument();
+    const typeElement = screen.getByText(/Type Content/i);
+    expect(typeElement).toBeInTheDocument();
+    const posterElement = screen.queryByAltText(/the item itself/i)
+    expect(posterElement).toBeInTheDocument();
+  });
+})
