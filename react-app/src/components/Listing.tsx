@@ -20,7 +20,6 @@ const Listing = () => {
   }, [dispatch]);
 
   const searchMoviesByName = (event: React.FormEvent<HTMLInputElement>) => {
-    debugger;
     const movieName = event.currentTarget.value;
     dispatch(fetchMoviesByName(movieName));
   };
