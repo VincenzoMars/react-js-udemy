@@ -1,7 +1,7 @@
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import './assets/styles/app.scss';
 import Listing from './components/Listing';
-import WelcomePage from './pages/Welcome'
+import WelcomePage from './pages/welcome/Welcome'
 
 const App = () => {
 
