@@ -1,0 +1,65 @@
+@use '../assets/styles/variables.scss';
+
+.overlay-transition-wrapper {
+    
+    .transition-block {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        z-index: 999;
+        left: -100%;
+        top: 0;
+
+        &.small {
+            width: 40%;
+        }
+
+        &.medium {
+            width: 70%;
+        }
+
+        &.large {
+            width: 100%;
+        }
+
+        &.color-1 {
+            background-color: variables.$quaternary;
+        }
+
+        &.color-2 {
+            background-color: variables.$pentakill;
+        }
+
+        &.color-3 {
+            background-color: variables.$secondary;
+        }
+
+        &.animation-slide-through {
+            animation-name: slideThrough;
+
+            &.speed-1 {
+                animation-duration: 1.5s;
+            }
+
+            &.speed-2 {
+                animation-duration: 1.0s;
+            }
+
+            &.speed-3 {
+                animation-duration: .8s;
+            }
+        }
+    }
+}
+
+
+@keyframes slideThrough {
+    from {
+        left: -100%;
+    }
+  
+    to {
+        left: 100%;
+    }
+}
+
